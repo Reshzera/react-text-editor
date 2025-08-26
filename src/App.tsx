@@ -1,8 +1,10 @@
-import { useState } from "react";
+import TextEditor from "./components/TextEditor";
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <div onClick={() => setCount((prev) => prev + 1)}>{count}</div>;
+  return (
+    <div>
+      <TextEditor />
+    </div>
+  );
 }
 
 export default App;
