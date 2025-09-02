@@ -1,7 +1,31 @@
+import { useEffect } from "react";
 import { makeBold, makeItalic, makeTitle } from "./editFunctions";
 import styles from "./styles.module.scss";
 
 const TextEditor: React.FC = () => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key.toLowerCase() === "b") {
+        e.preventDefault();
+        makeBold();
+      }
+
+      if (e.ctrlKey && e.key.toLowerCase() === "i") {
+        e.preventDefault();
+        makeItalic();
+      }
+      if (e.ctrlKey && ["1", "2", "3"].includes(e.key)) {
+        e.preventDefault();
+        makeTitle(Number(e.key));
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.toolbar}>
@@ -16,20 +40,15 @@ const TextEditor: React.FC = () => {
 
         <div className={styles.spacer} />
 
-        {/* Ex.: mudar nível de título */}
         <select
           className={styles.select}
           onChange={(e) => makeTitle(Number(e.target.value))}
           defaultValue="2"
           aria-label="Estilo de título"
         >
-          <option value="0">Parágrafo</option>
           <option value="1">Título 1</option>
           <option value="2">Título 2</option>
           <option value="3">Título 3</option>
-          <option value="4">Título 4</option>
-          <option value="5">Título 5</option>
-          <option value="6">Título 6</option>
         </select>
       </div>
 
@@ -41,9 +60,7 @@ const TextEditor: React.FC = () => {
           role="textbox"
           aria-multiline="true"
           data-placeholder="Comece a digitar…"
-        >
-          dasdas
-        </div>
+        />
       </div>
     </div>
   );
