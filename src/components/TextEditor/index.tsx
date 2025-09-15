@@ -14,7 +14,6 @@ const TextEditor: React.FC = () => {
         e.preventDefault();
         makeItalic();
       }
-      //
       if (e.ctrlKey && ["1", "2", "3"].includes(e.key)) {
         e.preventDefault();
         makeTitle(Number(e.key));
